@@ -1,8 +1,8 @@
 # chat
 A simple real-time chat server.
 
-## Usage
-`lein uberjar`
+## Running the code 
+`lein uberjar`  
 `java -jar target/chat-standalone.jar host <someHostIP> port <somePort>`
 
 ## License
