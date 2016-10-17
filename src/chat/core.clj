@@ -29,13 +29,12 @@
 (defn deregister-conn [conn]
   (swap! conns dissoc conn))
 
-
 ;; Channel Operations
 (defn send-previous-chat-messages [conn]
   (let [connected-channel-id (get-in @conns [conn :connected-channel-id])
         chat-messages        (get-in @channels [connected-channel-id :messages])]
     (async/send! conn (generate-string {:event "channel-messages"
-                                        :data  chat-messages}))))
+                                        :data  {:messages chat-messages}}))))
 
 (defn publish-chat-message-to-channel [chat-message channel-id]
   (let [channel (@channels channel-id)
@@ -60,7 +59,7 @@
 (def websocket-callbacks
   (letfn [(handle-connection [conn]
             (let [data {:event "connected"
-                        :data  {}}]
+                        :data  {:channels (map #(dissoc % :conns :messages) @channels)}}]
               (async/send! conn (generate-string data))))
 
           (handle-message [conn message]
