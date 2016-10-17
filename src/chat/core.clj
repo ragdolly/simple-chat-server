@@ -59,7 +59,7 @@
 (def websocket-callbacks
   (letfn [(handle-connection [conn]
             (let [data {:event "connected"
-                        :data  {:channels (map #(dissoc % :conns :messages) @channels)}}]
+                        :data  {:channels (map #(dissoc % :conns :messages) (vals @channels))}}]
               (async/send! conn (generate-string data))))
 
           (handle-message [conn message]
