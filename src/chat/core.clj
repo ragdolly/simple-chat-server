@@ -19,14 +19,14 @@
                        {:keys [event data]} message']
                    (condp = event
                      "sign-in"
-                     (commands/handle-sign-in conn (:username data))
+                     (commands/sign-in conn (:username data))
 
                      "new-message"
-                     (commands/handle-new-message conn data))))
+                     (commands/new-message conn data))))
 
    :on-error (fn [conn err] (println "error!"))
    :on-close (fn [conn {:keys [code reason]}]
-               (commands/handle-sign-out conn)
+               (commands/sign-out conn)
                (println "closing connection due to code " code ", reason: "  reason))})
 
 ;; TODO handle authentication and authorization later.
@@ -35,7 +35,7 @@
    (GET "/" request (async/as-channel request websocket-callbacks)) ;;
    (GET "/channels" [] (response get-channels)) ;; TODO
    (POST "/join" {{:keys [username channel-id]} :body}
-         (commands/handle-join-channel username channel-id))))
+         (commands/join-channel username channel-id))))
 
 (defn wrap-api [routes]
   (-> routes
