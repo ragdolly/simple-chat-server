@@ -6,6 +6,9 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.immutant/web "2.1.5"]
                  [ring/ring-core "1.5.0"]
+                 [ring/ring-json "0.4.0"]
+                 [ring/ring-defaults "0.2.1"]
+                 [compojure "1.5.1"]
                  [environ "1.1.0"]
                  [cheshire "5.6.3"]]
   :main chat.core ;; TODO
